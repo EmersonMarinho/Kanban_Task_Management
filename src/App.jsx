@@ -1,7 +1,12 @@
+import Header from "./components/Header"
+import Center from './components/Center'
 
 function App() {
   return (
-    <div className=' text-3xl text-red-500 underline'> App</div>
+    <>
+    <Header />
+    <Center />
+    </>
   )
 }
 
