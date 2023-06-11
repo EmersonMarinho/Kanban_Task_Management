@@ -5,6 +5,8 @@ import iconDown from '../assets/icon-chevron-down.svg'
 import iconUp from '../assets/icon-chevron-up.svg'
 import elipsis from '../assets/icon-vertical-ellipsis.svg'
 
+import HeaderDropDown from './HeaderDropDown'
+
 
 function Header() {
     const [openDropDown, setOpenDropDown] = useState(false)
@@ -30,7 +32,7 @@ function Header() {
             </div>
 
             <div className='flex space-x-4 items-center md:space-x-6'>
-                <button className='button'>
+                <button className=' hidden md:block button'>
                     + Add New Task
                 </button>
 
@@ -43,6 +45,8 @@ function Header() {
 
 
         </header>
+
+        {openDropDown && <HeaderDropDown  setOpenDropDown={setOpenDropDown}/>}
     </div>
   )
 }
