@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
 import logo from '../assets/logo-mobile.svg'
 import iconDown from '../assets/icon-chevron-down.svg'
@@ -9,10 +9,16 @@ import elipsis from '../assets/icon-vertical-ellipsis.svg'
 import HeaderDropDown from './HeaderDropDown'
 import AddEditBoardModal from '../modals/AddEditBoardModal'
 
+import { BoardsContext } from '../context/BoardsContext'
+
 
 function Header({ boardModalOpen, setBoardModalOpen }) {
     const [openDropDown, setOpenDropDown] = useState(false)
     const [boardTypes] = useState('add')
+
+    const { boards } = useContext(BoardsContext);
+    const board = boards.find((board) => board.isActive);
+
 
   return (
     <div className=' p-4 fixed left-0 bg-white dark:bg-[#2b2c37] z-50 right-0'>
@@ -23,7 +29,7 @@ function Header({ boardModalOpen, setBoardModalOpen }) {
                 <h3 className='hidden md:inline-block font-bold font-sans md:text-4xl'>Kanban</h3>
                 <div className='flex items-center'>
                     <h3 className=' truncate max-w-[200px] md:text-2xl text-xl font-bold md:ml-20 font-sans'>
-                        board Name
+                        {board?.name}
                     </h3>
                     <img 
                     src={openDropDown ? iconUp : iconDown} 

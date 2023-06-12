@@ -29,9 +29,9 @@ export const BoardsProvider = ({ children }) => {
     setBoards(updatedBoards);
   };
 
-  const setBoardActive = (id) => {
-    const updatedBoards = boards.map((board) => {
-      if (board.id === id) {
+  const setBoardActive = (index) => {
+    const updatedBoards = boards.map((board, i) => {
+      if (i === index) {
         return { ...board, isActive: true };
       } else {
         return { ...board, isActive: false };

@@ -8,7 +8,7 @@ import crossIcon from '../assets/icon-cross.svg';
 function AddEditBoardModal({ setBoardModalOpen, type }) {
     const { boards, setBoards, editBoard } = useContext(BoardsContext);
     const [name, setName] = useState("");
-    const [isValid, setIsValid] = useState(true);
+    const [, setIsValid] = useState(true);
 
 
     const [newColumns, setNewColumns] = useState([
