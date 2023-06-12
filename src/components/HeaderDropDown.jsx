@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useContext } from 'react'
 import boardIcon from '../assets/icon-board.svg'
 import lightIcon from '../assets/icon-light-theme.svg'
@@ -9,7 +10,7 @@ import { useState } from "react"
 import { BoardsContext } from "../context/BoardsContext"
 
 
-function HeaderDropDown({ setOpenDropDown }) {
+function HeaderDropDown({ setOpenDropDown, setBoardModalOpen }) {
     const [colorTheme, setTheme] = useDarkMode()
     const [darkSide, setDarkSide] = useState(colorTheme === 'light' ? true : false)
 
@@ -48,7 +49,11 @@ function HeaderDropDown({ setOpenDropDown }) {
                     </div>
                 ))}
 
-                <div className=" flex items-baseline space-x-2 text-[#635fc7] px-5 py-4">
+                <div className=" cursor-pointer flex items-baseline space-x-2 text-[#635fc7] px-5 py-4" 
+                    onClick={() => {
+                        setBoardModalOpen(true) 
+                        setOpenDropDown(false);}
+                    }>
                     <img src={boardIcon} alt="createTask" className="h-4"/>
                     <p className="text-lg font-bold">
                         Create new board
