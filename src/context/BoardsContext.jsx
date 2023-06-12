@@ -17,9 +17,9 @@ export const BoardsProvider = ({ children }) => {
     setBoards([...boards, board]);
   };
 
-  const editBoard = (name, newColumns) => {
+  const editBoard = (updatedBoard) => {
     const updatedBoards = boards.map((board) => {
-      return board.isActive ? { ...board, name, columns: newColumns } : board;
+      return board.id === updatedBoard.id ? updatedBoard : board;
     });
     setBoards(updatedBoards);
   };
@@ -116,7 +116,7 @@ export const BoardsProvider = ({ children }) => {
 
   return (
     <BoardsContext.Provider
-      value={{ boards, addBoard, editBoard, deleteBoard, setBoardActive, setSubtaskCompleted, setTaskStatus, deleteTask }}
+      value={{ boards, setBoards, addBoard, editBoard, deleteBoard, setBoardActive, setSubtaskCompleted, setTaskStatus, deleteTask }}
     >
       {children}
     </BoardsContext.Provider>
