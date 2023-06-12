@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from 'react'
 
 import logo from '../assets/logo-mobile.svg'
@@ -6,10 +7,12 @@ import iconUp from '../assets/icon-chevron-up.svg'
 import elipsis from '../assets/icon-vertical-ellipsis.svg'
 
 import HeaderDropDown from './HeaderDropDown'
+import AddEditBoardModal from '../modals/AddEditBoardModal'
 
 
-function Header() {
+function Header({ boardModalOpen, setBoardModalOpen }) {
     const [openDropDown, setOpenDropDown] = useState(false)
+    const [boardTypes] = useState('add')
 
   return (
     <div className=' p-4 fixed left-0 bg-white dark:bg-[#2b2c37] z-50 right-0'>
@@ -46,7 +49,12 @@ function Header() {
 
         </header>
 
-        {openDropDown && <HeaderDropDown  setOpenDropDown={setOpenDropDown}/>}
+        {openDropDown && <HeaderDropDown setBoardModalOpen={setBoardModalOpen} setOpenDropDown={setOpenDropDown}/>}
+
+        {
+            boardModalOpen && <AddEditBoardModal type={boardTypes} setBoardModalOpen={setBoardModalOpen} />
+        }
+
     </div>
   )
 }
