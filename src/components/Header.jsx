@@ -10,15 +10,17 @@ import HeaderDropDown from './HeaderDropDown'
 import AddEditBoardModal from '../modals/AddEditBoardModal'
 
 import { BoardsContext } from '../context/BoardsContext'
+import AddEditTaskModal from '../modals/AddEditTaskModal'
 
 
 function Header({ boardModalOpen, setBoardModalOpen }) {
     const [openDropDown, setOpenDropDown] = useState(false)
     const [boardTypes] = useState('add')
+    const [openAddEditTask, setOpenAddEditTask] = useState(false)
 
     const { boards } = useContext(BoardsContext);
     const board = boards.find((board) => board.isActive);
-
+    
 
   return (
     <div className=' p-4 fixed left-0 bg-white dark:bg-[#2b2c37] z-50 right-0'>
@@ -45,7 +47,9 @@ function Header({ boardModalOpen, setBoardModalOpen }) {
                     + Add New Task
                 </button>
 
-                <button className='button py-1 px-3 md:hidden'>
+                <button 
+                className='button py-1 px-3 md:hidden' 
+                onClick={() => setOpenAddEditTask(state => !state)}>
                     + 
                 </button>
 
@@ -59,6 +63,10 @@ function Header({ boardModalOpen, setBoardModalOpen }) {
 
         {
             boardModalOpen && <AddEditBoardModal type={boardTypes} setBoardModalOpen={setBoardModalOpen} />
+        }
+
+        {
+            openAddEditTask && <AddEditTaskModal setOpenAddEditTask={setOpenAddEditTask} device='mobile' />
         }
 
     </div>
