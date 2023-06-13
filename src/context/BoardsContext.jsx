@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import data from '../data/data.json';
+import { v4 as uuidv4 } from 'uuid';
 
 export const BoardsContext = React.createContext();
 
@@ -72,6 +73,54 @@ export const BoardsProvider = ({ children }) => {
     setBoards(updatedBoards);
   };
 
+  const addTask = (title, description, subtasks, status, newColIndex) => {
+    const newTask = {
+      id: uuidv4(),
+      title,
+      description,
+      subtasks,
+      status,
+    };
+  
+    const newBoards = [...boards];
+    const activeBoard = newBoards.find((board) => board.isActive);
+    const selectedColumn = activeBoard.columns[newColIndex - 1];
+    selectedColumn.tasks.push(newTask);
+  
+    setBoards(newBoards);
+  };
+
+  const editTask = (title, description, subtasks, status, taskIndex, prevColIndex, newColIndex) => {
+    const updatedBoards = boards.map((board) => {
+      if (board.isActive) {
+        const updatedColumns = board.columns.map((col, i) => {
+          if (i === prevColIndex) {
+            const updatedTasks = col.tasks.map((task, j) => {
+              if (j === taskIndex) {
+                return { title, description, subtasks, status };
+              } else {
+                return task;
+              }
+            });
+            return { ...col, tasks: updatedTasks };
+          } else if (i === newColIndex && prevColIndex !== newColIndex) {
+            const task = { title, description, subtasks, status };
+            const updatedTasks = [...col.tasks, task];
+            return { ...col, tasks: updatedTasks };
+          } else {
+            return col;
+          }
+        });
+        return { ...board, columns: updatedColumns };
+      } else {
+        return board;
+      }
+    });
+    setBoards(updatedBoards);
+  };
+  
+
+  
   const setTaskStatus = (colIndex, taskIndex, newColIndex, status) => {
     const updatedBoards = boards.map((board) => {
       if (board.isActive) {
@@ -116,7 +165,7 @@ export const BoardsProvider = ({ children }) => {
 
   return (
     <BoardsContext.Provider
-      value={{ boards, setBoards, addBoard, editBoard, deleteBoard, setBoardActive, setSubtaskCompleted, setTaskStatus, deleteTask }}
+      value={{ boards, setBoards, addBoard, editBoard, deleteBoard, setBoardActive, setSubtaskCompleted, editTask,  setTaskStatus, deleteTask, addTask }}
     >
       {children}
     </BoardsContext.Provider>
