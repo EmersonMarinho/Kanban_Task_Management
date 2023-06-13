@@ -84,6 +84,11 @@ export const BoardsProvider = ({ children }) => {
       const newBoards = [...boards];
       const activeBoard = newBoards.find((board) => board.isActive);
       const selectedColumn = activeBoard.columns[newColIndex];
+
+      if(!selectedColumn.tasks){
+        selectedColumn.tasks = [];  
+      }
+      
       selectedColumn.tasks.push(newTask);
       setBoards(newBoards);
   };

@@ -6,6 +6,7 @@ import { BoardsContext } from "../context/BoardsContext";
 
 
 
+
 function AddEditTaskModal({ type, device, setOpenAddEditTask, prevColIndex = 0, taskIndex}) {
     const [newColIndex, setNewColIndex] = useState(prevColIndex);
     const [title, setTitle] = useState('');
@@ -199,4 +200,6 @@ AddEditTaskModal.propTypes = {
     type: PropTypes.string.isRequired,
     device: PropTypes.string.isRequired,
     setOpenAddEditTask: PropTypes.func.isRequired,
+    prevColIndex: PropTypes.number.isRequired,
+    taskIndex: PropTypes.number.isRequired,
   }

@@ -5,6 +5,7 @@ import logo from '../assets/logo-mobile.svg'
 import iconDown from '../assets/icon-chevron-down.svg'
 import iconUp from '../assets/icon-chevron-up.svg'
 import elipsis from '../assets/icon-vertical-ellipsis.svg'
+import ElipsisMenu from './ElipsisMenu'
 
 import HeaderDropDown from './HeaderDropDown'
 import AddEditBoardModal from '../modals/AddEditBoardModal'
@@ -15,8 +16,9 @@ import AddEditTaskModal from '../modals/AddEditTaskModal'
 
 function Header({ boardModalOpen, setBoardModalOpen }) {
     const [openDropDown, setOpenDropDown] = useState(false)
-    const [boardTypes] = useState('add')
+    const [boardTypes, setBoardTypes] = useState('add')
     const [openAddEditTask, setOpenAddEditTask] = useState(false)
+    const [isElipisOpen, setIsElipsisOpen] = useState(false)
 
     const { boards } = useContext(BoardsContext);
     const board = boards.find((board) => board.isActive);
@@ -53,7 +55,16 @@ function Header({ boardModalOpen, setBoardModalOpen }) {
                     + 
                 </button>
 
-                <img  src={elipsis} alt='elipsis' className='cursor-pointer h-6'/>
+                <img  src={elipsis} onClick={() => {
+                    setOpenDropDown(false)
+                    setBoardTypes('edit')
+                    setIsElipsisOpen(state => !state)} 
+                                   
+                }
+     
+                    alt='elipsis' className='cursor-pointer h-6'/>
+
+                { isElipisOpen && <ElipsisMenu type='Boards' />}
             </div>
 
 
