@@ -48,7 +48,9 @@ function AddEditTaskModal({ type, device, setOpenAddEditTask, prevColIndex = 0, 
 
     const onChangeStatus = (e) => {
         setStatus(e.target.value);
-        setNewColIndex(e.target.selectedIndex);
+        setNewColIndex((e.target.selectedIndex));
+        console.log(((e.target.selectedIndex)))        
+
         
     }
 
@@ -67,7 +69,7 @@ function AddEditTaskModal({ type, device, setOpenAddEditTask, prevColIndex = 0, 
     }
     
     const onSubmit = (type) => {
-        if(type === 'submit' && newColIndex !== undefined){
+        if(type === 'submit' && newColIndex !== undefined && newColIndex !== null){
             addTask(title, description, subtasks, status, newColIndex);
         } else {
             editTask(title, description, subtasks, status, taskIndex, prevColIndex, newColIndex);
@@ -121,7 +123,6 @@ function AddEditTaskModal({ type, device, setOpenAddEditTask, prevColIndex = 0, 
             </div>
 
             { subtasks.map((subtask, index) => {
-                console.log(subtask.title);
                 return (
                     <div key={index} 
                         className=" flex items-center w-full"

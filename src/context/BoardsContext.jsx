@@ -81,13 +81,11 @@ export const BoardsProvider = ({ children }) => {
       subtasks,
       status,
     };
-  
-    const newBoards = [...boards];
-    const activeBoard = newBoards.find((board) => board.isActive);
-    const selectedColumn = activeBoard.columns[newColIndex - 1];
-    selectedColumn.tasks.push(newTask);
-  
-    setBoards(newBoards);
+      const newBoards = [...boards];
+      const activeBoard = newBoards.find((board) => board.isActive);
+      const selectedColumn = activeBoard.columns[newColIndex];
+      selectedColumn.tasks.push(newTask);
+      setBoards(newBoards);
   };
 
   const editTask = (title, description, subtasks, status, taskIndex, prevColIndex, newColIndex) => {
@@ -162,6 +160,8 @@ export const BoardsProvider = ({ children }) => {
     });
     setBoards(updatedBoards);
   };
+
+  console.log(boards);
 
   return (
     <BoardsContext.Provider
