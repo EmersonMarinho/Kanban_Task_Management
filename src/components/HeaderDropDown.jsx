@@ -20,7 +20,7 @@ function HeaderDropDown({ setOpenDropDown, setBoardModalOpen }) {
     }
 
 
-    const boards = useContext(BoardsContext).boards;
+    const { boards, setBoardActive } = useContext(BoardsContext);
 
     console.log('boards =', boards);
 
@@ -42,6 +42,9 @@ function HeaderDropDown({ setOpenDropDown, setBoardModalOpen }) {
             <div>
                 {boards.map((board, index) => (
                     <div key={index} 
+                    onClick={() => {
+                        setBoardActive(index);
+                    }}
                     className={`flex items-baseline  dark:text-white space-x-2 px-5 py-4 
                     ${board.isActive && 'bg-[#635fc7] rounded-r-full text-white mr-8'}`}>
                         <img src={boardIcon} alt="boardIcon" className=" h-4" />
