@@ -5,7 +5,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import crossIcon from '../assets/icon-cross.svg';
 
-function AddEditBoardModal({ setBoardModalOpen, type }) {
+function AddEditBoardModal({ setBoardModalOpen, type, id }) {
     const { boards, setBoards, editBoard } = useContext(BoardsContext);
     const [name, setName] = useState("");
     const [, setIsValid] = useState(true);
@@ -55,14 +55,16 @@ function AddEditBoardModal({ setBoardModalOpen, type }) {
                 isActive: false,
                 columns: newColumns,
             }
+            console.log(newBoard);
             setBoards([...boards, newBoard]);
         } else {
             const updatedBoard = {
-                id: uuidv4(),
+                id,
                 name,
                 isActive: true,
                 columns: newColumns,
             }
+            console.log(updatedBoard);
             editBoard(updatedBoard);
         }
     }
