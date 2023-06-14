@@ -1,16 +1,21 @@
 /* eslint-disable react/prop-types */
+// External Libraries
 import React, { useState } from 'react';
-import data from '../data/data.json';
 import { v4 as uuidv4 } from 'uuid';
+
+// Local Modules
+import data from '../data/data.json';
 
 export const BoardsContext = React.createContext();
 
 export const BoardsProvider = ({ children }) => {
   const [boards, setBoards] = useState(data.boards);
 
+  // Board Functions
   const addBoard = (name, newColumns) => {
     const isActive = boards.length === 0 ? false : true;
     const board = {
+      id: uuidv4(),
       name,
       isActive,
       columns: newColumns,
@@ -19,9 +24,9 @@ export const BoardsProvider = ({ children }) => {
   };
 
   const editBoard = (updatedBoard) => {
-    const updatedBoards = boards.map((board) => {
-      return board.id === updatedBoard.id ? updatedBoard : board;
-    });
+    const updatedBoards = boards.map((board) =>
+      board.name === updatedBoard.id ? updatedBoard : board
+    );
     setBoards(updatedBoards);
   };
 
@@ -32,47 +37,12 @@ export const BoardsProvider = ({ children }) => {
 
   const setBoardActive = (index) => {
     const updatedBoards = boards.map((board, i) => {
-      if (i === index) {
-        return { ...board, isActive: true };
-      } else {
-        return { ...board, isActive: false };
-      }
+      return i === index ? { ...board, isActive: true } : { ...board, isActive: false };
     });
     setBoards(updatedBoards);
   };
 
-  const setSubtaskCompleted = (colIndex, taskIndex, index) => {
-    const updatedBoards = boards.map((board) => {
-      if (board.isActive) {
-        const updatedColumns = board.columns.map((col, i) => {
-          if (i === colIndex) {
-            const updatedTasks = col.tasks.map((task, j) => {
-              if (j === taskIndex) {
-                const updatedSubtasks = task.subtasks.map((subtask, k) => {
-                  if (k === index) {
-                    return { ...subtask, isCompleted: !subtask.isCompleted };
-                  } else {
-                    return subtask;
-                  }
-                });
-                return { ...task, subtasks: updatedSubtasks };
-              } else {
-                return task;
-              }
-            });
-            return { ...col, tasks: updatedTasks };
-          } else {
-            return col;
-          }
-        });
-        return { ...board, columns: updatedColumns };
-      } else {
-        return board;
-      }
-    });
-    setBoards(updatedBoards);
-  };
-
+  // Task Functions
   const addTask = (title, description, subtasks, status, newColIndex) => {
     const newTask = {
       id: uuidv4(),
@@ -81,16 +51,16 @@ export const BoardsProvider = ({ children }) => {
       subtasks,
       status,
     };
-      const newBoards = [...boards];
-      const activeBoard = newBoards.find((board) => board.isActive);
-      const selectedColumn = activeBoard.columns[newColIndex];
+    const newBoards = [...boards];
+    const activeBoard = newBoards.find((board) => board.isActive);
+    const selectedColumn = activeBoard.columns[newColIndex];
 
-      if(!selectedColumn.tasks){
-        selectedColumn.tasks = [];  
-      }
-      
-      selectedColumn.tasks.push(newTask);
-      setBoards(newBoards);
+    if (!selectedColumn.tasks) {
+      selectedColumn.tasks = [];
+    }
+
+    selectedColumn.tasks.push(newTask);
+    setBoards(newBoards);
   };
 
   const editTask = (title, description, subtasks, status, taskIndex, prevColIndex, newColIndex) => {
@@ -121,9 +91,7 @@ export const BoardsProvider = ({ children }) => {
     });
     setBoards(updatedBoards);
   };
-  
 
-  
   const setTaskStatus = (colIndex, taskIndex, newColIndex, status) => {
     const updatedBoards = boards.map((board) => {
       if (board.isActive) {
@@ -166,11 +134,56 @@ export const BoardsProvider = ({ children }) => {
     setBoards(updatedBoards);
   };
 
+  // Subtask Functions
+  const setSubtaskCompleted = (colIndex, taskIndex, index) => {
+    const updatedBoards = boards.map((board) => {
+      if (board.isActive) {
+        const updatedColumns = board.columns.map((col, i) => {
+          if (i === colIndex) {
+            const updatedTasks = col.tasks.map((task, j) => {
+              if (j === taskIndex) {
+                const updatedSubtasks = task.subtasks.map((subtask, k) => {
+                  if (k === index) {
+                    return { ...subtask, isCompleted: !subtask.isCompleted };
+                  } else {
+                    return subtask;
+                  }
+                });
+                return { ...task, subtasks: updatedSubtasks };
+              } else {
+                return task;
+              }
+            });
+            return { ...col, tasks: updatedTasks };
+          } else {
+            return col;
+          }
+        });
+        return { ...board, columns: updatedColumns };
+      } else {
+        return board;
+      }
+    });
+    setBoards(updatedBoards);
+  };
+
   console.log(boards);
 
   return (
     <BoardsContext.Provider
-      value={{ boards, setBoards, addBoard, editBoard, deleteBoard, setBoardActive, setSubtaskCompleted, editTask,  setTaskStatus, deleteTask, addTask }}
+      value={{
+        boards,
+        setBoards,
+        addBoard,
+        editBoard,
+        deleteBoard,
+        setBoardActive,
+        addTask,
+        editTask,
+        setTaskStatus,
+        deleteTask,
+        setSubtaskCompleted,
+      }}
     >
       {children}
     </BoardsContext.Provider>

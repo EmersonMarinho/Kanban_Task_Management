@@ -15,6 +15,7 @@ import AddEditTaskModal from '../modals/AddEditTaskModal'
 
 
 function Header({ boardModalOpen, setBoardModalOpen }) {
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
     const [openDropDown, setOpenDropDown] = useState(false)
     const [boardTypes, setBoardTypes] = useState('add')
     const [openAddEditTask, setOpenAddEditTask] = useState(false)
@@ -22,6 +23,16 @@ function Header({ boardModalOpen, setBoardModalOpen }) {
 
     const { boards } = useContext(BoardsContext);
     const board = boards.find((board) => board.isActive);
+
+    const setOpenEditModal =  () => {
+        setBoardModalOpen(true)
+        setIsElipsisOpen(false)
+    }
+
+    const setOpenDeleteModal =  () => {
+        setIsDeleteModalOpen(true)
+        setIsElipsisOpen(false)
+    }
     
 
   return (
@@ -59,12 +70,15 @@ function Header({ boardModalOpen, setBoardModalOpen }) {
                     setOpenDropDown(false)
                     setBoardTypes('edit')
                     setIsElipsisOpen(state => !state)} 
-                                   
                 }
      
                     alt='elipsis' className='cursor-pointer h-6'/>
 
-                { isElipisOpen && <ElipsisMenu type='Boards' />}
+                { isElipisOpen && <ElipsisMenu 
+                setOpenEditModal={setOpenEditModal}
+                setOpenDeleteModal={setOpenDeleteModal}
+                type='Boards'  
+                />}
             </div>
 
 
@@ -77,7 +91,8 @@ function Header({ boardModalOpen, setBoardModalOpen }) {
         }
 
         {
-            openAddEditTask && <AddEditTaskModal setOpenAddEditTask={setOpenAddEditTask} device='mobile' type='submit' />
+            openAddEditTask && <AddEditTaskModal setOpenAddEditTask={setOpenAddEditTask} device='mobile' type='submit' 
+            id={board.id}/>
         }
 
     </div>
