@@ -70,11 +70,12 @@ function AddEditTaskModal({ type, device, setOpenAddEditTask, prevColIndex = 0, 
     }
     
     const onSubmit = (type) => {
-        if(type === 'submit' && newColIndex !== undefined && newColIndex !== null){
+        if(type === 'submit'){
             addTask(title, description, subtasks, status, newColIndex);
         } else {
             editTask(title, description, subtasks, status, taskIndex, prevColIndex, newColIndex);
         }
+        setOpenAddEditTask(false);
     }
 
   return (

@@ -23,6 +23,7 @@ function Header({ boardModalOpen, setBoardModalOpen }) {
 
     const { boards } = useContext(BoardsContext);
     const board = boards.find((board) => board.isActive);
+    console.log(board);
 
     const setOpenEditModal =  () => {
         setBoardModalOpen(true)
@@ -87,7 +88,7 @@ function Header({ boardModalOpen, setBoardModalOpen }) {
         {openDropDown && <HeaderDropDown setBoardModalOpen={setBoardModalOpen} setOpenDropDown={setOpenDropDown}/>}
 
         {
-            boardModalOpen && <AddEditBoardModal type={boardTypes} setBoardModalOpen={setBoardModalOpen} />
+            boardModalOpen && <AddEditBoardModal type={boardTypes} setBoardModalOpen={setBoardModalOpen} id={board?.id} />
         }
 
         {

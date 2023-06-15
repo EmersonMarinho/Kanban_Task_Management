@@ -8,8 +8,13 @@ import data from '../data/data.json';
 
 export const BoardsContext = React.createContext();
 
+const boardsWithIDs = data.boards.map(board => ({
+  ...board,
+  id: uuidv4(),
+}));
+
 export const BoardsProvider = ({ children }) => {
-  const [boards, setBoards] = useState(data.boards);
+  const [boards, setBoards] = useState(boardsWithIDs);
 
   // Board Functions
   const addBoard = (name, newColumns) => {
@@ -20,15 +25,18 @@ export const BoardsProvider = ({ children }) => {
       isActive,
       columns: newColumns,
     };
+    console.log("New Board", board);
     setBoards([...boards, board]);
   };
 
   const editBoard = (updatedBoard) => {
-    const updatedBoards = boards.map((board) =>
-      board.name === updatedBoard.id ? updatedBoard : board
+    console.log('Editing Board', boards.id, updatedBoard);
+    setBoards((prevBoards) =>
+        prevBoards.map((board) =>
+            board.id === updatedBoard.id ? updatedBoard : board
+        )
     );
-    setBoards(updatedBoards);
-  };
+};
 
   const deleteBoard = () => {
     const updatedBoards = boards.filter((board) => !board.isActive);
