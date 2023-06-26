@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 
 function DeleteModal({ type, title, onDeletebtnClick, setIsDeleteModalOpen }) {
   return (
@@ -8,7 +8,7 @@ function DeleteModal({ type, title, onDeletebtnClick, setIsDeleteModalOpen }) {
       }
       setIsDeleteModalOpen(false)
     }}>
-      <div className='scrollbar-hide overflow-y-scroll max-h-[95vh] my-auto bg-white dark:bg-[#2b2c37] text-black dark:text-white w-full px-8 py-8 rounded-xl'>
+      <div className='scrollbar-hide overflow-y-scroll max-w-md max-h-[95vh] my-auto bg-white dark:bg-[#2b2c37] text-black dark:text-white w-full px-8 py-8 rounded-xl'>
         <h3 className='font-bold text-red-500 text-xl'>
           Delete This {type} ?
         </h3>
@@ -26,5 +26,12 @@ function DeleteModal({ type, title, onDeletebtnClick, setIsDeleteModalOpen }) {
     </div>
   );
 }
+
+DeleteModal.propTypes = {
+  type: PropTypes.string,
+  title: PropTypes.string,
+  onDeletebtnClick: PropTypes.func,
+  setIsDeleteModalOpen: PropTypes.func,
+};
 
 export default DeleteModal;
