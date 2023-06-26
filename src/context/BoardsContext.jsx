@@ -38,8 +38,9 @@ export const BoardsProvider = ({ children }) => {
     );
 };
 
-  const deleteBoard = () => {
-    const updatedBoards = boards.filter((board) => !board.isActive);
+  const deleteBoard = (id) => {
+    console.log('Deleting Board', id);
+    const updatedBoards = boards.filter((board) => board.id !== id);
     setBoards(updatedBoards);
   };
 

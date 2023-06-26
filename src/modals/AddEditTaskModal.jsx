@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext} from "react";
 import { v4 as uuidv4 } from "uuid";
 import crossIcon from "../assets/icon-cross.svg";
 import PropTypes from 'prop-types';
@@ -24,12 +24,10 @@ function AddEditTaskModal({ type, device, setOpenAddEditTask, prevColIndex = 0, 
 
     const board = boards.find((board) => board.isActive);
     
-
     const columns = board ? board.columns : [];
     // const col = columns.find((col, index) => index === prevColIndex);
 
     const [status, setStatus] = useState(columns[prevColIndex].name);
-
 
     const onDelete = (id) => {
         setSubtasks((prevState) => {
@@ -50,9 +48,6 @@ function AddEditTaskModal({ type, device, setOpenAddEditTask, prevColIndex = 0, 
     const onChangeStatus = (e) => {
         setStatus(e.target.value);
         setNewColIndex((e.target.selectedIndex));
-        console.log(((e.target.selectedIndex)))        
-
-        
     }
 
     const validate = () => {
@@ -201,6 +196,6 @@ AddEditTaskModal.propTypes = {
     type: PropTypes.string.isRequired,
     device: PropTypes.string.isRequired,
     setOpenAddEditTask: PropTypes.func.isRequired,
-    prevColIndex: PropTypes.number.isRequired,
-    taskIndex: PropTypes.number.isRequired,
+    prevColIndex: PropTypes.number,
+    taskIndex: PropTypes.number,
   }

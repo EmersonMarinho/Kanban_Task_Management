@@ -12,6 +12,7 @@ import AddEditBoardModal from '../modals/AddEditBoardModal'
 
 import { BoardsContext } from '../context/BoardsContext'
 import AddEditTaskModal from '../modals/AddEditTaskModal'
+import DeleteModal from '../modals/DeleteModal'
 
 
 function Header({ boardModalOpen, setBoardModalOpen }) {
@@ -95,6 +96,8 @@ function Header({ boardModalOpen, setBoardModalOpen }) {
             openAddEditTask && <AddEditTaskModal setOpenAddEditTask={setOpenAddEditTask} device='mobile' type='submit' 
             id={board.id}/>
         }
+
+        { isDeleteModalOpen && <DeleteModal setIsDeleteModalOpen={setIsDeleteModalOpen} title={board.name} type='board' />}
 
     </div>
   )

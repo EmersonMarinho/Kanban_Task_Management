@@ -15,7 +15,7 @@ function AddEditBoardModal({ setBoardModalOpen, type, id }) {
         { name: 'To Do', task: [], id: uuidv4() },
         { name: 'Doing', task: [], id: uuidv4() },
     ]);
-
+    
     const onChange = (id, newValue) => {
         setNewColumns((prevState) => {
             const newState = [...prevState];
@@ -55,7 +55,6 @@ function AddEditBoardModal({ setBoardModalOpen, type, id }) {
                 isActive: false,
                 columns: newColumns,
             }
-            console.log(newBoard);
             setBoards([...boards, newBoard]);
         } else {
             const updatedBoard = {
@@ -64,7 +63,6 @@ function AddEditBoardModal({ setBoardModalOpen, type, id }) {
                 isActive: true,
                 columns: newColumns,
             }
-            console.log(updatedBoard);
             editBoard(updatedBoard);
         }
     }
@@ -86,7 +84,7 @@ function AddEditBoardModal({ setBoardModalOpen, type, id }) {
 
                 <div className="mt-8 flex flex-col space-y-3">
                     <label className="text-sm dark:text-white text-gray-500">
-                        Board Columns
+                        Board Name
                     </label>
                     <input
                         className="bg-transparent px-4 py-2 rounded-md text-sm border-gray-600 outline-none focus:outline-[#635fc7] outline-1 ring-0"
